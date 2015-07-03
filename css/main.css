@@ -1,6 +1,6 @@
 /* GENERAL */
-html, body {
-    min-height: 100vh;
+body {
+    min-height: 100%;
 }
 
 .main-container {
@@ -27,6 +27,10 @@ html, body {
 /* STREAMS FRAME */
 h1 .btn {
     margin-bottom: 10px;
+}
+
+.channels-container {
+    margin-top: 50px;
 }
 
 .stream-card {

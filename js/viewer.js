@@ -13,7 +13,6 @@ $(function() {
     $(window).resize(resizeFrames);
 });
 
-
 function resizeFrames() {
     var width = $('body').width();
     var height = $('body').height();

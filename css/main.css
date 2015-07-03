@@ -1,12 +1,12 @@
 /* GENERAL */
 body {
     min-height: 100%;
-}
-
-.main-container {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+    background: url('../img/background.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: white;
 }
 
 /* LOGIN FRAME */
@@ -25,20 +25,31 @@ body {
 }
 
 /* STREAMS FRAME */
+.heading-container {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 h1 .btn {
     margin-bottom: 10px;
 }
 
 .channels-container {
     margin-top: 50px;
+    padding-right: 40px;
 }
 
 .stream-card {
+    padding-left: 40px;
     position: relative;
     overflow: hidden;
-    margin-bottom: 35px;
+    margin-bottom: 55px;
     cursor: pointer;
-    border-bottom: 1px solid black;
+}
+
+.stream-card:hover {
+    background-color: rgba(0,0,0,0.3);
+    transition: 1s;
 }
 
 .stream-card h3 {
@@ -67,7 +78,7 @@ h1 .btn {
 
 .stream-card img.avatar {
     position: absolute;
-    left: 0;
+    left: 40px;
     bottom: 5px;
     width: 60px;
     height: 60px;

@@ -1,0 +1,70 @@
+/* GENERAL */
+html, body {
+    min-height: 100vh;
+}
+
+.main-container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* LOGIN FRAME */
+.login {
+    position: absolute;
+    width: 600px;
+    height: 220px;
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -175px;
+}
+
+.login h1 {
+    font-size: 70px;
+}
+
+/* STREAMS FRAME */
+h1 .btn {
+    margin-bottom: 10px;
+}
+
+.stream-card {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 35px;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+}
+
+.stream-card h3 {
+    margin-top: 8px;
+}
+
+.stream-card h4 {
+    margin-left: 75px;
+}
+
+.stream-card img.preview {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    transform: rotate(12deg);
+}
+
+.stream-card:hover img.preview {
+    transition: 200ms;
+    right: -10px;
+}
+
+.stream-card .sub-card {
+    display: inline-block;
+}
+
+.stream-card img.avatar {
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    width: 60px;
+    height: 60px;
+}

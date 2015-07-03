@@ -31,6 +31,12 @@ $(function() {
             $('._login').fadeIn();
         });
     });
+
+    $('._login input').keyup(function(e) {
+        if(e.keyCode == 13){
+            $('._btn-login').trigger('click');
+        }
+    });
 });
 
 function initializeFor(username) {

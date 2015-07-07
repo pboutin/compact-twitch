@@ -6,3 +6,14 @@ body {
     min-height: 100%;
     overflow: hidden;
 }
+
+div.stream-details {
+    height: 25px;
+    background-color: #f2f2f2;
+}
+
+div.viewers-container {
+    position: absolute;
+    right: 5px;
+    font: 12px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
+}

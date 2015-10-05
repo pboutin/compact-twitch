@@ -9,6 +9,7 @@ window.config = {
 $(function() {
     var stream = /s=(\w+)$/.exec(window.location.href)[1];
     window.config.stream = stream;
+    document.title = stream;
 
     $('._stream').attr('src', config.apiStreamEmbed.replace('{{stream}}', stream));
     $('._chat').attr('src', config.apiChatEmbed.replace('{{channel}}', stream));
@@ -30,7 +31,6 @@ function resizeFrames() {
     $('._viewers-container').css('top', streamHeight + 35);
 
     var chatHeight = height - streamHeight;
-    console.log(height, streamHeight, chatHeight);
     $('._chat').attr('height', chatHeight);
 }
 

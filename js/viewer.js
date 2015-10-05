@@ -21,15 +21,16 @@ $(function() {
 });
 
 function resizeFrames() {
-    var width = $('body').width();
-    var height = $('body').height();
+    var width = window.innerWidth;
+    var height = window.innerHeight;
 
-    var streamHeight = width / 16 * 9 + 20;
+    var streamHeight = width / 16 * 9;
     $('._stream').attr('height', streamHeight);
 
     $('._viewers-container').css('top', streamHeight + 35);
 
-    var chatHeight = height - streamHeight - 25;
+    var chatHeight = height - streamHeight;
+    console.log(height, streamHeight, chatHeight);
     $('._chat').attr('height', chatHeight);
 }
 

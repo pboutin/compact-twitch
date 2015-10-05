@@ -72,7 +72,7 @@ function generateCardFor(stream) {
     <div class='stream-card'> \
         <h3>TITLE</h3> \
         <h4>DISPLAY_NAME</h4> \
-        <h4>Playing GAME</h4> \
+        <h4>Playing GAME for VIEWERS viewer(s)</h4> \
         <img class='avatar' src='AVATAR' alt='avatar' /> \
         <img class='preview' src='http://static-cdn.jtvnw.net/previews-ttv/live_user_NAME-320x180.jpg' alt='preview' /> \
     </div>";
@@ -82,6 +82,7 @@ function generateCardFor(stream) {
     template = template.replace(/NAME/, stream.channel.name);
     template = template.replace(/GAME/, stream.channel.game);
     template = template.replace(/AVATAR/, stream.channel.logo);
+    template = template.replace(/VIEWERS/, stream.viewers);
 
     $card.html(template);
     $card.data('stream', stream.channel.name);

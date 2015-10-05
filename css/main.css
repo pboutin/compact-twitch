@@ -6,7 +6,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    color: white;
+    color: #f2f2f2 !important;
 }
 
 /* LOGIN FRAME */

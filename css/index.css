@@ -1,3 +1,14 @@
+/* TRANSITIONS */
+.expand-transition {
+    transition: all .3s ease;
+}
+
+.expand-enter, .expand-leave {
+    height: 0;
+    padding: 0 10px;
+    opacity: 0;
+}
+
 /* GENERAL */
 body {
     min-height: 100%;
@@ -34,7 +45,7 @@ h1 .btn {
     margin-bottom: 10px;
 }
 
-.channels-container {
+.streams-container {
     margin-top: 50px;
     padding-right: 40px;
 }

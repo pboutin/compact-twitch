@@ -4,37 +4,50 @@
         <meta charset="utf-8">
         <title>Compact Twitch</title>
         <link rel="stylesheet" href="https://bootswatch.com/superhero/bootstrap.min.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
-        <div style="display:none" class="_login login">
-            <h1 class="text-center">Who are you ?</h1>
-            <div class="form-group">
-                <input type="text" class="text-center form-control input-lg" placeholder="Twitch username">
+        <div id="index">
+            <div v-if="!isReady" transition="expand" class="login">
+                <h1 class="text-center">Who are you ?</h1>
+                <div class="form-group">
+                    <input v-on:keyup.enter="login"
+                           v-model="username"
+                           type="text"
+                           class="text-center form-control input-lg"
+                           placeholder="Twitch username">
+                </div>
+                <button v-on:click="login" class="btn btn-primary btn-block btn-lg">
+                    Check who's online
+                </button>
             </div>
-            <button type="button" class="_btn-login btn btn-primary btn-block btn-lg">
-                Check who's online
-            </button>
-        </div>
-        <div style="display:none" class="_streams">
-            <div class="heading-container">
-                <h1>
-                    Hi <span class="_username"></span> !
-                    <button type="button" class="_btn-logout btn btn-warning">
-                        Logout
-                    </button>
-                </h1>
-                <h3>
-                    You have <span class="_streamers-length"></span> streamer(s) online !
-                </h3>
+            <div v-if="isReady" transition="expand">
+                <div class="heading-container">
+                    <h1>
+                        Hi {{ username}} !
+                        <button v-on:click="logout" class="btn btn-warning">
+                            Logout
+                        </button>
+                    </h1>
+                    <h3>{{ count }}</h3>
+                </div>
+                <div class="streams-container">
+                    <div v-for="stream in streams" v-on:click="open(stream)" class='stream-card'>
+                        <h3>{{ stream.status }}</h3>
+                        <h4>{{ stream.channel.display_name }}</h4>
+                        <h4>Playing {{ stream.game }} for {{ stream.viewers }} viewer(s)</h4>
+                        <img v-bind:src="stream.channel.logo" class='avatar' alt='avatar' />
+                        <img v-bind:src="'http://static-cdn.jtvnw.net/previews-ttv/live_user_' + stream.channel.name + '-320x180.jpg'" class='preview' alt='preview' />
+                    </div>
+                </div>
             </div>
-            <div class="_online-channels channels-container"></div>
         </div>
 
 
         <a href="https://github.com/pboutin/compact-twitch"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
         <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
-        <script src="js/main.js" type="text/javascript"></script>
+        <script src="http://cdn.jsdelivr.net/vue/1.0.1/vue.min.js" type="text/javascript"></script>
+        <script src="js/index.js" type="text/javascript"></script>
     </body>
 </html>

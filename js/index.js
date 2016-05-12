@@ -79,7 +79,7 @@ var index = new Vue({
                     this.isLoaded = true;
                     this.isLoggedIn = true;
 
-                    setTimeout(this.load.bind(this), 10000);
+                    setTimeout(this.load.bind(this), 300000);
                 }.bind(this));
             }.bind(this));
         },

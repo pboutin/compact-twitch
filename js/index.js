@@ -1,3 +1,5 @@
+Notification.requestPermission();
+
 var index = new Vue({
     el: '#index',
     data: {
@@ -45,8 +47,23 @@ var index = new Vue({
                     channel: names.join(','),
                     limit: 75
                 }, function(response) {
+                    if (this.isReady) {
+                        new Notification('New streams online : ', {
+                            body: response.streams
+                                    .filter(function(stream) {
+                                        return ! this.streams.includes(stream);
+                                    }.bind(this))
+                                    .map(function(stream) {
+                                        return stream.channel.display_name;
+                                    })
+                                    .join(', ')
+                        });
+                    }
+
                     this.streams = response.streams;
                     this.isReady = true;
+
+                    setTimeout(this.load.bind(this), 300000);
                 }.bind(this));
             }.bind(this));
         },

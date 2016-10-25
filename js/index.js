@@ -5,6 +5,8 @@ var index = new Vue({
     data: {
         apiBaseUrl: 'https://api.twitch.tv/kraken/',
 
+        clientId: 'rti32d5dop5qkouj33w35hketm1wk59',
+
         username: '',
         isUserNotFound: false,
         isLoggedIn: false,
@@ -13,7 +15,10 @@ var index = new Vue({
     },
     computed: {
         apiFollowingUrl: function() {
-            return this.apiBaseUrl + 'users/' + this.username + '/follows/channels?callback=?';
+            return this.apiBaseUrl + 'users/' + this.username + '/follows/channels';
+        },
+        apiStreamsUrl: function() {
+            return this.apiBaseUrl + 'streams';
         },
 
         countMessage: function() {
@@ -35,7 +40,7 @@ var index = new Vue({
 
         },
         load: function () {
-            $.getJSON(this.apiFollowingUrl, {
+            this.ajaxGet(this.apiFollowingUrl, {
                 limit: 75,
                 sortby: 'last_broadcast'
             }, function(response) {
@@ -50,7 +55,7 @@ var index = new Vue({
                     return follow.channel.name;
                 });
 
-                $.getJSON('https://api.twitch.tv/kraken/streams?callback=?', {
+                this.ajaxGet(this.apiStreamsUrl, {
                     channel: names.join(','),
                     limit: 75
                 }, function(response) {
@@ -85,6 +90,18 @@ var index = new Vue({
         },
         open: function(stream) {
             window.open('viewer.html?s=' + stream.channel.name, stream.channel.display_name, 'width=500, height=800');
+        },
+        ajaxGet: function(url, params, callback) {
+            $.ajax({
+                method: 'GET',
+                url: url,
+                dataType: 'json',
+                data: params,
+                headers: {
+                    'Client-ID': this.clientId
+                },
+                success: callback
+            });
         }
     },
 

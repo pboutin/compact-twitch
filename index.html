@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -8,20 +9,23 @@
     </head>
     <body>
         <div id="index">
-            <div v-if="!isReady" transition="expand" class="login">
+            <div v-if="!isLoggedIn" transition="expand" class="login">
                 <h1 class="text-center">Who are you ?</h1>
+                <div v-if="isUserNotFound" class="alert alert-warning">
+                    This user doesn't seem to exist.
+                </div>
                 <div class="form-group">
-                    <input v-on:keyup.enter="login"
+                    <input v-on:keyup.enter="load"
                            v-model="username"
                            type="text"
                            class="text-center form-control input-lg"
                            placeholder="Twitch username">
                 </div>
-                <button v-on:click="login" class="btn btn-primary btn-block btn-lg">
+                <button v-on:click="load" class="btn btn-primary btn-block btn-lg">
                     Check who's online
                 </button>
             </div>
-            <div v-if="isReady" transition="expand">
+            <div v-if="isLoggedIn" transition="expand">
                 <div class="heading-container">
                     <h1>
                         Hi {{ username}} !
@@ -29,7 +33,7 @@
                             Logout
                         </button>
                     </h1>
-                    <h3>{{ count }}</h3>
+                    <h3>{{ countMessage }}</h3>
                 </div>
                 <div class="streams-container">
                     <div v-for="stream in streams" v-on:click="open(stream)" class='stream-card'>

@@ -1,19 +1,26 @@
+Notification.requestPermission();
+
 var index = new Vue({
     el: '#index',
     data: {
         apiBaseUrl: 'https://api.twitch.tv/kraken/',
 
         username: '',
-        isReady: false,
-        streams: []
-
+        isUserNotFound: false,
+        isLoggedIn: false,
+        isLoaded: false,
+        streams: null
     },
     computed: {
         apiFollowingUrl: function() {
             return this.apiBaseUrl + 'users/' + this.username + '/follows/channels?callback=?';
         },
 
-        count: function() {
+        countMessage: function() {
+            if ( ! this.isLoaded) {
+                return 'Initialization...';
+            }
+
             var count = this.streams.length;
             if (count === 0) {
                 return 'Meh, you will have to find something else to watch.';
@@ -22,14 +29,9 @@ var index = new Vue({
         }
     },
     methods: {
-        login: function() {
-            localStorage.username = this.username;
-            this.load();
-
-        },
         logout: function() {
             localStorage.clear();
-            this.isReady = false;
+            this.isLoggedIn = false;
 
         },
         load: function () {
@@ -37,6 +39,13 @@ var index = new Vue({
                 limit: 75,
                 sortby: 'last_broadcast'
             }, function(response) {
+                if (response.status === 404) {
+                    this.isUserNotFound = true;
+                    return;
+                }
+                this.isUserNotFound = false;
+                localStorage.username = this.username;
+
                 var names = response.follows.map(function(follow) {
                     return follow.channel.name;
                 });
@@ -45,8 +54,32 @@ var index = new Vue({
                     channel: names.join(','),
                     limit: 75
                 }, function(response) {
+                    if (this.streams !== null) {
+                        var currentStreamIds = this.streams.map(function(stream) {
+                            return stream._id;
+                        });
+
+                        var newStreamsMessage = response.streams
+                            .filter(function(stream) {
+                                return ! currentStreamIds.includes(stream._id);
+                            }.bind(this))
+                            .map(function(stream) {
+                                return stream.channel.display_name;
+                            })
+                            .join(', ');
+
+                        if (newStreamsMessage) {
+                            new Notification('New streams online : ', {
+                                body: newStreamsMessage
+                            });
+                        }
+                    }
+
                     this.streams = response.streams;
-                    this.isReady = true;
+                    this.isLoaded = true;
+                    this.isLoggedIn = true;
+
+                    setTimeout(this.load.bind(this), 300000);
                 }.bind(this));
             }.bind(this));
         },
@@ -58,7 +91,8 @@ var index = new Vue({
     ready: function() {
         if (localStorage.username) {
             this.username = localStorage.username;
-            this.login();
+            this.isLoggedIn = true;
+            this.load();
         }
     }
 });
